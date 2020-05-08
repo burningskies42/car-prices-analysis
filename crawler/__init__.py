@@ -121,7 +121,7 @@ class Crawler(object):
 if __name__ == '__main__':
     crawler = Crawler(
         'https://www.mahag.de/gebrauchte/fahrzeugsuche/',
-        output_file='/home/leon/Documents/repos/crawler/links.csv',
+        output_file='/home/leon/Documents/repos/car-prices-analysis/crawler/links.csv',
         include=['https://www.mahag.de/gebrauchte/fahrzeugsuche/'],
         template='.*html&ahId=\d+',
         rotate_proxies=False
