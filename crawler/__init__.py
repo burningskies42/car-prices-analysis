@@ -108,9 +108,11 @@ class Crawler(object):
     def load_crawler(self, fname):
         pass
 
-    def start(self):
+    def start(self, resume=False):
         # create output file
-        open(self.output_file ,'w+')
+        if not resume:
+            open(self.output_file ,'w+')
+            
         self.crawl(self.starting_url)
 
         while len(self.to_visit) > 0:
