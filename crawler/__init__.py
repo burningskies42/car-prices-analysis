@@ -9,6 +9,7 @@ class Crawler(object):
         self.starting_url = starting_url
         self.output_file = output_file
         self.visited = set()
+        self.to_visit = set()
         self.ignore_set = ignore or set(['mailto','google','youtube','twitter','ahSrt'])
         self.include_set = include
         self.links_found = list()
@@ -83,7 +84,9 @@ class Crawler(object):
 
         Arguments:
             url {string} -- link url
-        """        
+        """
+
+        self.to_visit.discard(url)   
         for link in self.get_links(url):
             if link in self.visited:
                 continue
@@ -98,12 +101,22 @@ class Crawler(object):
                     f.write(link)
                     f.write('\n')
 
-            self.crawl(link)
+            # self.crawl(link)
+            self.to_visit.add(link)
+
+    # TODO: add pickling and loading
+    def load_crawler(self, fname):
+        pass
 
     def start(self):
         # create output file
         open(self.output_file ,'w+')
         self.crawl(self.starting_url)
+
+        while len(self.to_visit) > 0:
+            link = self.to_visit.pop()
+            self.crawl(link)
+
 
     # TODO: free proxies are mostly useless. Either blacklisted or dead
     def get_proxies(self):
